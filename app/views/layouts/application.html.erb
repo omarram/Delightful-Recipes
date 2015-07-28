@@ -8,7 +8,7 @@
 </head>
 <body>
 
-  <nav class="navbar navbar-inverse">
+  <nav class="navbar navbar-default">
     <div class="container">
       <div class="navbar-brand"><%= link_to("Recipes", root_path) %></div>
       <ul class="nav navbar-nav navbar-right">
@@ -22,9 +22,12 @@
     <% flash.each do |name, msg| %>
       <%= content_tag(:div, msg, :class => "alert") %>
     <% end %>
+    <div class="bkg">
+      <div class="back">
+        <%= yield %>
+      </div>      
+    </div>
   </div>
-
-  <%= yield %>
 
 </body>
 </html>
