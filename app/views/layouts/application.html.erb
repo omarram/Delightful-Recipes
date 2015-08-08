@@ -1,40 +1,46 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>DelightfulRecipes</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+  <head>
+    <title>DelightfulRecipes</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <% if notice %>
+      <div id="notice_wrapper">
+        <p class="notice"><%= notice %></p>
+      </div>
+    <% elsif alert %>
+      <div id="notice_wrapper">
+        <p class="alert"><%= alert %></p>     
+      </div>  
+    <% end %> <br>
 
-  <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-brand"><%= link_to("Delightful Recipes", root_path) %></div>
+        <% if user_signed_in? %>
+          <ul class="nav navbar-nav navbar-right">
+            <li><%= link_to("Add Recipe", new_recipe_path) %></li>
+            <li><%= link_to("Sign Out", destroy_user_session_path, :method => "delete") %></li>
+          </ul>
+        <% else %>
+          <ul class="nav navbar-nav navbar-right">
+            <li><%= link_to("Sign Up", new_user_registration_path) %></li>
+            <li><%= link_to("Sign In", new_user_session_path) %></li>
+          </ul>
+        <% end %>
+      </div>
+    </nav>
+
     <div class="container">
-      <div class="navbar-brand"><%= link_to("Delightful Recipes", root_path) %></div>
-      <% if user_signed_in? %>
-        <ul class="nav navbar-nav navbar-right">
-          <li><%= link_to("Add Recipe", new_recipe_path) %></li>
-          <li><%= link_to("Sign Out", destroy_user_session_path, :method => "delete") %></li>
-        </ul>
-      <% else %>
-        <ul class="nav navbar-nav navbar-right">
-          <li><%= link_to("Sign Up", new_user_registration_path) %></li>
-          <li><%= link_to("Sign In", new_user_session_path) %></li>
-        </ul>
-      <% end %>
+      <div class="bkg">
+        <div class="back">
+          <%= yield %>
+        </div>      
+      </div>
     </div>
-  </nav>
 
-  <div class="container">
-    <% flash.each do |name, msg| %>
-      <%= content_tag(:div, msg, :class => "alert") %>
-    <% end %>
-    <div class="bkg">
-      <div class="back">
-        <%= yield %>
-      </div>      
-    </div>
-  </div>
-
-</body>
+  </body>
 </html>
