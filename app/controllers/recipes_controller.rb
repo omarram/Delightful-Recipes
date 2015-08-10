@@ -34,8 +34,11 @@ class RecipesController < ApplicationController
   end
 
   def destroy
-    @recipe.destroy
-    redirect_to(root_path, :notice => "Recipe has been successfully removed")
+    if @recipe.destroy
+      redirect_to(root_path, :notice => "Recipe has been successfully removed")
+    else
+      render('edit')
+    end
   end
 
   private 
